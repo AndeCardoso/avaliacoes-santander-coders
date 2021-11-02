@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <input type="number" placeholder="Enter a number..." required>
+        <button type="submit" id="enter">enter</button>
+        <h2>
+            Choose a operator...
+        </h2>
+        <select id="operator">
+            <option value="sum">Sum</option>
+            <option value="minus">Minus</option>
+            <option value="multiply">Multiply</option>
+            <option value="divide">Divide</option>
+        </select>
+    </form>
+    <div>
+        <button id="equals">Equals</button>
+        <div>
+            <label for="result">Result:</label>
+            <span name="result"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,54 +1,50 @@
 package com.letscode.player;
 
 import com.letscode.board.BoardGame;
-import com.letscode.submarine.Submarine;
 import com.letscode.cpu.Cpu;
+
+import java.util.Objects;
 
 public class Player extends BoardGame {
 
-    private final int SIZE = 10;
     BoardGame boardGame = new BoardGame();
-    Submarine submarine = new Submarine();
-
-    public void startBoard() {
-        for(int l = 0; l < SIZE; l++) {
-            for(int c = 0; c < SIZE; c++) {
-                boardGame.board[l][c]="~";
-            }
-        }
-        submarine.startPositions();
-    }
+    String[][] board = boardGame.startBoard();
 
     public void printBoard() {
-        System.out.println("    0   1   2   3   4   5   6   7   8   9   ");
-        System.out.println("   ----------------------------------------");
-        for(int l = 0 ; l < SIZE ; l++) {
+        System.out.println("   ----ENEMY BOARD----");
+        System.out.println("    0   1   2   3   4 ");
+        System.out.println("   -------------------");
+        for(int l = 0 ; l < BoardGame.SIZE ; l++) {
             System.out.print(l + " ");
-            for(int c = 0 ; c < SIZE ; c++) {
+            for(int c = 0 ; c < BoardGame.SIZE ; c++) {
                 System.out.print("| " + this.board[l][c] + " ");
             }
             System.out.println("|");
-            System.out.println("   ----------------------------------------");
+            System.out.println("   -------------------");
         }
     }
 
     public void tryShot(Cpu cpu){
-        int submarines = 10;
+        int submarines = BoardGame.SIZE;
 
+        cpu.printBoard();
         while(submarines != 0){
             int lin = readLine();
             int col = readColumn();
 
-            String choice = submarine.position[lin][col];
+            String choice = board[lin][col];
 
-            if(choice != null){
+            if(choice.equals("S")){
                 System.out.println("You got a enemy submarine! >:)");
                 board[lin][col] = "*";
                 submarines--;
 
             } else {
                 System.out.println("You miss the shot :(!");
-                board[lin][col] = "-";
+
+                if(!Objects.equals(board[lin][col], "*")){
+                    board[lin][col] = "-";
+                }
             }
 
             String cpuTurn = cpu.tryShot();
@@ -57,9 +53,7 @@ public class Player extends BoardGame {
                 System.out.println("You has a been shooting in submarine! :,(");
             } else if(cpuTurn.equals("LOST")) {
                 System.out.println("The enemy has destroyed all yours submarines!");
-                System.out.println("Your board:");
                 cpu.printBoard();
-                System.out.println("Enemy board:");
                 printBoard();
                 System.out.println("YOU LOSE!");
                 submarines = 0;
@@ -67,6 +61,9 @@ public class Player extends BoardGame {
                 System.out.println("The enemy miss a shot!");
             }
         }
+        System.out.println("You has destroyed all enemy's submarines!");
+        cpu.printBoard();
+        printBoard();
         System.out.println("You WIN!");
     }
 

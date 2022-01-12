@@ -1,15 +1,22 @@
 package com.letscode.submarine;
 
+import com.letscode.board.BoardGame;
+
+import java.util.Objects;
+
 public class Submarine {
 
-    private final int SIZE = 10;
-    public String position[][] = new String[SIZE][SIZE];
+    public String position[][] = new String[BoardGame.SIZE][BoardGame.SIZE];
 
     public void startPositions() {
-        for(int i = 0; i < SIZE; i++) {
-            int x = (int) (Math.random()*(9));
-            int y = (int) (Math.random()*(9));
-            position[x][y] = "S";
+        for(int i = 0; i < BoardGame.SIZE; i++) {
+            int x = (int) (Math.random()*(BoardGame.SIZE));
+            int y = (int) (Math.random()*(BoardGame.SIZE));
+            if(Objects.equals(position[x][y], "S")){
+                i--;
+            } else {
+                position[x][y] = "S";
+            }
         }
     }
 }
